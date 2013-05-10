@@ -1,5 +1,5 @@
 <?php
-namespace Icms\Model;
+namespace SimpleORM;
 // Debugging
 if ( ! function_exists('bug')
      && file_exists(dirname('__FILE__') .'/debug.inc.php')
@@ -158,7 +158,7 @@ $GLOBALS['SimpleORM_OBJECT_CACHE'] = array();
  * @package SimpleORM
  * @version $Id: SimpleORM.class.php,v 1.3 2009/10/30 18:55:35 dave Exp $
  */
-class Simpleorm {
+class SimpleORM {
     /**
      * $table - the table who's rows this object represents
      *

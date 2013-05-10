@@ -1,5 +1,11 @@
 {
-    "name": "inetz/simpleorm",
-    "version": "1.0.0"
+    "name": "unlox/simpleorm",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-0": {
+            "SimpleORM\\": "lib/"
+        }
+    }
+
 
 }
