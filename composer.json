@@ -1,5 +1,5 @@
 {
-    "name": "unlox/simpleorm",
+    "name": "unlox/SimpleORM",
     "version": "1.0.0",
     "autoload": {
         "psr-0": {
