@@ -4,50 +4,40 @@ namespace SimpleORM;
 
 class Base extends SimpleORM
 {
-	protected function provide_dbh()
-	{
-		$global_conf_file = getcwd().'/config/autoload/global.php';
+    protected function provide_dbh()
+    {
+        $global_conf_file = getcwd().'/config/autoload/global.php';
         $local_conf_file = getcwd().'/config/autoload/local.php';
         $global = include $global_conf_file;
         $local = include $local_conf_file;
         $dsn = $global['db']['dsn'];
         $user = $local['db']['username'];
         $pass = $local['db']['password'];
-        $db = new \Zend\Db\Adapter\Adapter(array(
-            'driver' => 'Pdo_Mysql',
-            'database' => 'wave_core',
-            'username' => $user,
-            'password' => $pass
-        ));
-		return $db; 
-	}
-	protected function provide_dbh_type()
-	{
-		return 'mysql'; 
-	} 
-	protected function include_prefix()
-	{
-		return APPLICATION_PATH .'/models/'; 
-	}
+        $db = new \PDO($dsn,$user,$pass);
+        return $db; 
+    }
+    protected function provide_dbh_type()
+    {
+        return 'mysql'; 
+    } 
+    protected function include_prefix()
+    {
+        return APPLICATION_PATH .'/models/'; 
+    }
 
 
 
-	  public static function get_where($where = null, $limit_or_only_one = false, $order_by = null) {
+      public static function get_where($where = null, $limit_or_only_one = false, $order_by = null) {
         //$db = Globals::getDb();
 
-		$global_conf_file = getcwd().'/config/autoload/global.php';
-		$local_conf_file = getcwd().'/config/autoload/local.php';
-		$global = include $global_conf_file;
-		$local = include $local_conf_file;
-		$dsn = $global['db']['dsn'];
-		$user = $local['db']['username'];
-		$pass = $local['db']['password'];
-	  	$db = new \Zend\Db\Adapter\Adapter(array(
-    		'driver' => 'Pdo_Mysql',
-    		'database' => 'wave_core',
-    		'username' => $user,
-    		'password' => $pass
- 		));
+        $global_conf_file = getcwd().'/config/autoload/global.php';
+        $local_conf_file = getcwd().'/config/autoload/local.php';
+        $global = include $global_conf_file;
+        $local = include $local_conf_file;
+        $dsn = $global['db']['dsn'];
+        $user = $local['db']['username'];
+        $pass = $local['db']['password'];
+        $db = new \PDO($dsn,$user,$pass);
 
 
         ///  Because we are STATIC, and most everything we need is NON-STATIC
@@ -71,9 +61,9 @@ class Base extends SimpleORM
         ///  Assemble a generic SQL based on the table of this object
         $values = array();
 
-		if( $where ) {
-		    $where_ary = array();
-		    foreach ($where as $col => $val) {
+        if( $where ) {
+            $where_ary = array();
+            foreach ($where as $col => $val) {
                 ///  If the where condition is just a string (not an assocative COL = VALUE), then just add it..
                 if ( is_int($col) ) { $where_ary[] = $val; }
                 ///  Otherwise, basic ( assocative COL = VALUE )
@@ -84,7 +74,7 @@ class Base extends SimpleORM
                   FROM ". $tmp_obj->get_table() ."
                  WHERE ". ( isset($where_ary) ? join(' AND ', $where_ary) : '1' ) ."
                  ". ( ! is_null($order_by) ? ( "ORDER BY ". $order_by ) : '' ) ."
-		   	  ". ( ( $limit_or_only_one !== true && $limit_or_only_one ) ? ( "LIMIT " . $limit_or_only_one ) : '' ) ."
+              ". ( ( $limit_or_only_one !== true && $limit_or_only_one ) ? ( "LIMIT " . $limit_or_only_one ) : '' ) ."
                 ";
 
         $data = $db->createStatement($sql,$values)->execute();
