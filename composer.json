@@ -1,10 +1,11 @@
 {
     "name": "unlox/SimpleORM",
-    "version": "1.0.0",
+    "version": "1.0.01",
     "autoload": {
         "psr-0": {
             "SimpleORM\\": "lib/"
-        }
+        },
+        "files": ["debug.inc.php"]
     }
 
 
